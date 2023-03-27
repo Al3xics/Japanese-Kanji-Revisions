@@ -76,6 +76,9 @@ class MyMainWindow(QMainWindow):
             self.img = randint(0, len(self.image_list) - 1)
             random_image = self.image_list[self.img]
 
+            #print(self.image_list_used)
+            #print(self.image_list)
+
             image_path = self.path + "\\" + random_image
             random_image = QImage(image_path)
 
@@ -88,9 +91,11 @@ class MyMainWindow(QMainWindow):
 
             # Ajouter l'image précédente à la nouvelle liste
             self.image_list_used.append(self.previous_image)
+            #print(self.image_list_used)
 
             # Enlever l'image de la liste principale
             self.image_list.remove(self.previous_image)
+            #print(self.image_list)
 
             if self.image_list == []:
                 QMessageBox.information(self, "Aucun élément trouvé", "Vous êtes arrivé à la fin de la séries. Commencer une nouvelle série ?", QMessageBox.Yes)
@@ -219,6 +224,17 @@ class MyMainWindow(QMainWindow):
 
 
     def Recherche(self):
+        # Stocker l'image précédente
+        self.previous_image = self.image_list[self.current_image]
+
+        # Ajouter l'image précédente à la nouvelle liste
+        self.image_list_used.append(self.previous_image)
+        #print(self.image_list_used)
+
+        # Enlever l'image de la liste principale
+        self.image_list.remove(self.previous_image)
+        #print(self.image_list)
+
         # On récupère la valeur de l'entrée
         self.motRecherche = self.ui.searchInput.text()
         self.ui.mLabelRechercheMot.hide()
@@ -227,7 +243,7 @@ class MyMainWindow(QMainWindow):
             found = False
 
             if self.motRecherche in self.hiragana:
-                self.Check(self.fichier.index(self.motRecherche))
+                self.Check(self.hiragana.index(self.motRecherche))
 
                 found = True
                 self.update()
